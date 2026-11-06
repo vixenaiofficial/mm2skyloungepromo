@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MM2 Skylounge · Flex and Save</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1B0F0C;--ink2:#2A1813;--cream:#FFF4E0;--muted:#E9CDAE;--tomato:#E4572E;--gold:#F6B93B;--green:#25D366;--r:24px}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--ink);color:var(--cream);line-height:1.5;padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+h1,h2,h3{font-family:'Bricolage Grotesque',Inter,sans-serif;font-weight:800;letter-spacing:-.02em;margin:0;line-height:1}
+.wrap{width:min(960px,100% - 32px);margin-inline:auto}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:14px 22px;border-radius:999px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:inherit;transition:transform .15s ease}
+.btn:active{transform:scale(.97)}
+.btn-tomato{background:var(--tomato);color:var(--cream)}
+.btn-wa{background:var(--green);color:#06210F}
+.btn-line{border-color:var(--cream);color:var(--cream);background:none}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+header.top{position:sticky;top:0;z-index:10;background:rgba(27,15,12,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,244,224,.1);padding-top:env(safe-area-inset-top,0px)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:19px;color:var(--gold);text-decoration:none;letter-spacing:.04em}
+.open-pill{font-size:13px;font-weight:700;background:var(--green);color:#06210F;padding:6px 12px;border-radius:999px}
+
+.hero{padding:28px 0 4px}
+.hero h1{font-size:clamp(44px,12vw,88px)}
+.hero h1 span{color:var(--tomato)}
+.hero p{font-size:18px;color:var(--muted);margin:14px 0 0}
+.hero img{width:100%;height:240px;object-fit:cover;border-radius:24px;margin-top:20px;display:block}
+
+section{padding:40px 0 0}
+section h2.sec{font-size:30px;margin-bottom:14px}
+
+/* menu items */
+.items{display:grid;gap:14px}
+.item{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;background:var(--ink2);border-radius:var(--r);padding:20px;border:1px solid rgba(255,244,224,.1)}
+.item.best{background:var(--gold);color:var(--ink);border-color:transparent}
+.item img{width:100%;height:170px;object-fit:cover;border-radius:18px;grid-column:1/-1;display:block}
+.item h3{font-size:24px}
+.item p{margin:6px 0 0;font-size:15px;opacity:.9}
+.item .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;background:var(--tomato);color:var(--cream);padding:4px 9px;border-radius:999px;margin-bottom:8px}
+.price{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:28px;white-space:nowrap}
+.stepper{display:flex;align-items:center;gap:10px;grid-column:1/-1;justify-content:space-between;margin-top:4px}
+.stepper .label{font-weight:700;font-size:15px}
+.stepper .ctrl{display:flex;align-items:center;gap:12px}
+.stepper button{width:48px;height:48px;border-radius:50%;border:0;font-size:24px;font-weight:800;background:var(--cream);color:var(--ink);cursor:pointer}
+.item.best .stepper button{background:var(--ink);color:var(--gold)}
+.stepper output{min-width:28px;text-align:center;font-weight:800;font-size:20px}
+
+/* buffet booking */
+.booking{background:var(--cream);color:var(--ink);border-radius:var(--r);padding:22px}
+.booking h3{font-size:24px}
+.booking p{margin:8px 0 0;font-size:15px}
+.choices{display:grid;gap:10px;margin-top:14px}
+.choices label{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--ink);border-radius:18px;padding:14px 16px;font-weight:700;cursor:pointer;min-height:56px}
+.choices input{width:22px;height:22px;accent-color:var(--tomato)}
+.choices small{display:block;font-weight:500;font-size:14px;opacity:.8}
+
+/* details form */
+.details{background:var(--ink2);border-radius:var(--r);padding:22px;border:1px solid rgba(255,244,224,.1);margin-top:14px}
+.details label{display:block;font-weight:700;font-size:14px;margin-bottom:8px}
+.details input,.details textarea{width:100%;font:inherit;font-size:16px;padding:14px 16px;border-radius:14px;border:2px solid rgba(255,244,224,.2);background:var(--ink);color:var(--cream);margin-bottom:16px}
+.details input:focus,.details textarea:focus{outline:none;border-color:var(--gold)}
+
+/* summary */
+.summary{margin-top:14px;background:var(--cream);color:var(--ink);border-radius:var(--r);padding:20px}
+.summary ul{list-style:none;padding:0;margin:0 0 12px;display:grid;gap:8px;font-size:16px}
+.summary li{display:flex;justify-content:space-between;gap:12px}
+.summary .total{display:flex;justify-content:space-between;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:28px;border-top:2px solid var(--ink);padding-top:12px}
+.summary .empty{opacity:.7;font-size:15px}
+
+.addr{background:var(--ink2);border-radius:var(--r);padding:22px;border:1px solid rgba(255,244,224,.1);margin-top:14px}
+.addr p{margin:6px 0 0;color:var(--muted);font-size:16px}
+.addr .btn{width:100%;margin-top:14px}
+.hours{margin-top:14px;display:grid;gap:8px;font-size:16px}
+.hours div{display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(255,244,224,.1);padding-top:8px}
+.hours b{font-weight:700}
+footer{padding:36px 0 20px;color:var(--muted);font-size:14px;text-align:center}
+
+/* sticky order bar */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:15;background:rgba(27,15,12,.97);backdrop-filter:blur(10px);border-top:1px solid rgba(255,244,224,.12);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+.dock .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0 auto}
+.dock .amt{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;line-height:1.1}
+.dock .amt small{display:block;font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:var(--muted)}
+.dock .btn{min-height:50px;padding:12px 20px}
+@media (min-width:720px){
+  body{padding-bottom:0}
+  .dock{display:none}
+  .items{grid-template-columns:1fr 1fr}
+  .item.wide{grid-column:1/-1}
+  .item.wide img{height:260px}
+  .booking-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a href="#top" class="brand">MM2 SKYLOUNGE</a>
+    <a href="#order" class="open-pill" style="text-decoration:none">Order</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div class="eyebrow">Promo · Flex and Save</div>
+    <h1>Flex <span>and Save.</span></h1>
+    <p>Pick what you want, check your total, then send your order on WhatsApp.</p>
+    <img src="images/pizza-pepperoni.png" alt="Pepperoni pizza with a cheese pull">
+  </div>
+
+  <section class="wrap" id="order">
+    <h2 class="sec">1. Pick your food</h2>
+    <div class="items">
+      <article class="item" data-name="Solo pizza" data-price="17000">
+        <img src="images/pizza-basil.png" alt="Pizza with tomato, basil and cheese">
+        <div>
+          <span class="tag">SOLO</span>
+          <h3>Pizza only</h3>
+          <p>One fresh pizza, hot from the oven.</p>
+        </div>
+        <div class="price">₦17,000</div>
+        <div class="stepper">
+          <span class="label">How many?</span>
+          <div class="ctrl">
+            <button type="button" aria-label="Remove one solo pizza" data-act="-1">−</button>
+            <output>0</output>
+            <button type="button" aria-label="Add one solo pizza" data-act="1">+</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="item best wide" data-name="The Combo" data-price="22000">
+        <img src="images/combo-poster.jpg" alt="The Combo poster: pizza, wings, fries and coke">
+        <div>
+          <span class="tag" style="background:var(--ink);color:var(--gold)">BEST VALUE</span>
+          <h3>The Combo</h3>
+          <p>Pizza + chicken wings + fries + cold coke.</p>
+        </div>
+        <div class="price">₦22,000</div>
+        <div class="stepper">
+          <span class="label">How many?</span>
+          <div class="ctrl">
+            <button type="button" aria-label="Remove one combo" data-act="-1">−</button>
+            <output>0</output>
+            <button type="button" aria-label="Add one combo" data-act="1">+</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2 class="sec">2. Buffet table</h2>
+    <div class="booking-wrap">
+      <div class="booking">
+        <h3>The Big Buffet</h3>
+        <p>Book a table for the buffet. We'll confirm with you on WhatsApp.</p>
+        <div class="choices" role="radiogroup" aria-label="Buffet session">
+          <label><input type="radio" name="buffet" value="5 Dec · 5 PM – 9 PM"> <span>Sat 5 December<small>5:00 PM – 9:00 PM</small></span></label>
+          <label><input type="radio" name="buffet" value="Sunday · 12 PM – 4 PM"> <span>Sunday Buffet<small>12:00 PM – 4:00 PM</small></span></label>
+        </div>
+      </div>
+      <img src="images/buffet-nigerian.png" alt="Nigerian buffet with jollof rice, fried rice, shrimp and stew" style="width:100%;height:100%;min-height:200px;object-fit:cover;border-radius:24px;display:block">
+    </div>
+  </section>
+
+  <section class="wrap">
+    <h2 class="sec">3. Your details</h2>
+    <div class="details">
+      <label for="name">Your name</label>
+      <input id="name" type="text" placeholder="e.g. Ada" autocomplete="name">
+      <label for="note">Note (optional)</label>
+      <textarea id="note" rows="2" placeholder="e.g. extra pepper, table for 4"></textarea>
+    </div>
+
+    <div class="summary" aria-live="polite">
+      <div class="eyebrow" style="color:var(--tomato)">Your order</div>
+      <ul id="lines"><li class="empty">Nothing picked yet.</li></ul>
+      <div class="total"><span>Total</span><span id="total">₦0</span></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="addr">
+      <div class="eyebrow">Find us</div>
+      <p><b style="color:var(--cream)">MM2 Skylounge</b><br>Sky Mall, Isihor Road, opposite Eddy Grace Filling Station, Uselu, Benin City, Edo State</p>
+      <a class="btn btn-tomato" href="https://maps.app.goo.gl/uSSdnmB8vP5dgWsu8?g_st=ac">Open in Google Maps</a>
+      <div class="hours">
+        <div><span>Pizza &amp; Combo</span><b>Daily</b></div>
+        <div><span>Sunday Buffet</span><b>12 PM – 4 PM</b></div>
+        <div><span>5 Dec Buffet</span><b>5 PM – 9 PM</b></div>
+      </div>
+      <div style="display:grid;gap:10px;margin-top:14px">
+        <a class="btn btn-line" href="tel:+2348036675581">Call 0803 667 5581</a>
+        <a class="btn btn-line" href="tel:+2348106997645">Call 0810 699 7645</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>© MM2 Skylounge</footer>
+</main>
+
+<div class="dock">
+  <div class="wrap">
+    <div class="amt"><span id="dockTotal">₦0</span><small id="dockCount">Nothing picked</small></div>
+    <button class="btn btn-wa" id="send" type="button" disabled>Send order on WhatsApp</button>
+  </div>
+</div>
+
+<script>
+const WA = "2348036675581";
+const naira = n => "₦" + n.toLocaleString("en-NG");
+const items = [...document.querySelectorAll(".item")].map(el => ({
+  el, name: el.dataset.name, price: +el.dataset.price, qty: 0,
+  out: el.querySelector("output")
+}));
+
+function render() {
+  const picked = items.filter(i => i.qty > 0);
+  const total = picked.reduce((s, i) => s + i.qty * i.price, 0);
+  const count = picked.reduce((s, i) => s + i.qty, 0);
+  items.forEach(i => i.out.textContent = i.qty);
+  const lines = document.getElementById("lines");
+  lines.innerHTML = picked.length
+    ? picked.map(i => `<li><span>${i.qty} × ${i.name}</span><span>${naira(i.qty * i.price)}</span></li>`).join("")
+    : '<li class="empty">Nothing picked yet.</li>';
+  document.getElementById("total").textContent = naira(total);
+  document.getElementById("dockTotal").textContent = naira(total);
+  document.getElementById("dockCount").textContent = count ? `${count} item${count > 1 ? "s" : ""} picked` : "Nothing picked";
+  document.getElementById("send").disabled = count === 0;
+}
+
+items.forEach(i => i.el.querySelectorAll("button[data-act]").forEach(b =>
+  b.addEventListener("click", () => {
+    i.qty = Math.max(0, i.qty + Number(b.dataset.act));
+    render();
+  })
+));
+
+document.getElementById("send").addEventListener("click", () => {
+  const picked = items.filter(i => i.qty > 0);
+  const total = picked.reduce((s, i) => s + i.qty * i.price, 0);
+  const name = document.getElementById("name").value.trim();
+  const note = document.getElementById("note").value.trim();
+  const buffet = document.querySelector('input[name="buffet"]:checked');
+  let msg = "Hi MM2 Skylounge, I'd like to order:\n\n";
+  picked.forEach(i => msg += `- ${i.qty} x ${i.name} (${naira(i.qty * i.price)})\n`);
+  msg += `\nTotal: ${naira(total)}`;
+  if (buffet) msg += `\nBuffet table: ${buffet.value}`;
+  if (name) msg += `\nName: ${name}`;
+  if (note) msg += `\nNote: ${note}`;
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
+});
+
+render();
+</script>
+</body>
+</html>
