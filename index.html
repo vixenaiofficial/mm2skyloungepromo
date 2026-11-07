@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1B0F0C;--ink2:#2A1813;--cream:#FFF4E0;--muted:#E9CDAE;--tomato:#E4572E;--gold:#F6B93B;--green:#25D366;--r:24px}
+:root{--ink:#0D0D0D;--ink2:#1E1E1E;--cream:#FFFFFF;--muted:#C9C9C9;--tomato:#D7261E;--gold:#D7261E;--green:#25D366;--r:24px}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--ink);color:var(--cream);line-height:1.5;padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
@@ -39,7 +39,7 @@ section h2.sec{font-size:30px;margin-bottom:14px}
 /* menu items */
 .items{display:grid;gap:14px}
 .item{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;background:var(--ink2);border-radius:var(--r);padding:20px;border:1px solid rgba(255,244,224,.1)}
-.item.best{background:var(--gold);color:var(--ink);border-color:transparent}
+.item.best{background:var(--tomato);color:var(--cream);border-color:transparent}
 .item img{width:100%;height:170px;object-fit:cover;border-radius:18px;grid-column:1/-1;display:block}
 .item h3{font-size:24px}
 .item p{margin:6px 0 0;font-size:15px;opacity:.9}
@@ -49,7 +49,7 @@ section h2.sec{font-size:30px;margin-bottom:14px}
 .stepper .label{font-weight:700;font-size:15px}
 .stepper .ctrl{display:flex;align-items:center;gap:12px}
 .stepper button{width:48px;height:48px;border-radius:50%;border:0;font-size:24px;font-weight:800;background:var(--cream);color:var(--ink);cursor:pointer}
-.item.best .stepper button{background:var(--ink);color:var(--gold)}
+.item.best .stepper button{background:var(--ink);color:var(--cream)}
 .stepper output{min-width:28px;text-align:center;font-weight:800;font-size:20px}
 
 /* buffet booking */
@@ -140,7 +140,7 @@ footer{padding:36px 0 20px;color:var(--muted);font-size:14px;text-align:center}
       <article class="item best wide" data-name="The Combo" data-price="22000">
         <img src="images/combo-poster.jpg" alt="The Combo poster: pizza, wings, fries and coke">
         <div>
-          <span class="tag" style="background:var(--ink);color:var(--gold)">BEST VALUE</span>
+          <span class="tag" style="background:var(--ink);color:var(--cream)">BEST VALUE</span>
           <h3>The Combo</h3>
           <p>Pizza + chicken wings + fries + cold coke.</p>
         </div>
